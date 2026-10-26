@@ -1,0 +1,86 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/services/:slug(hydrofuge-fa.*|d.*moussage-fa.*|nettoyage-fa.*|ravalement.*|rev.*tement.*)",
+      "destination": "/#facade",
+      "permanent": true
+    },
+    {
+      "source": "/services/:slug(traitement-d.*humidit.*|remont.*capillaires|salp.*tre|infiltrations.*|nettoyage-terrasse)",
+      "destination": "/#facade",
+      "permanent": true
+    },
+    {
+      "source": "/services/:slug(isolation.*|combles.*)",
+      "destination": "/#isolation",
+      "permanent": true
+    },
+    {
+      "source": "/services/:slug",
+      "destination": "/servicetype/toiture",
+      "permanent": true
+    },
+    {
+      "source": "/servicetype/isolation",
+      "destination": "/#isolation",
+      "permanent": true
+    },
+    {
+      "source": "/servicetype/:slug(fa.*ade)",
+      "destination": "/#facade",
+      "permanent": true
+    },
+    {
+      "source": "/realisations",
+      "destination": "/#realisations",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/#contact",
+      "permanent": true
+    },
+    {
+      "source": "/a-propos",
+      "destination": "/#samuel",
+      "permanent": true
+    },
+    {
+      "source": "/conditions-generales",
+      "destination": "/mentions-legales",
+      "permanent": true
+    },
+    {
+      "source": "/politique-de-confidentialite",
+      "destination": "/mentions-legales#confidentialite",
+      "permanent": true
+    },
+    {
+      "source": "/declaration-daccessibilite",
+      "destination": "/mentions-legales",
+      "permanent": true
+    }
+  ]
+}
