@@ -347,11 +347,22 @@
       var ioV = new IntersectionObserver(function (en) {
         en.forEach(function (x) {
           var v = x.target;
-          if (x.isIntersecting) { if (v.preload === 'none') v.preload = 'auto'; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+          if (x.isIntersecting && !v.hasAttribute('data-arretee')) { if (v.preload === 'none') v.preload = 'auto'; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
           else v.pause();
         });
       }, { threshold: 0.35 });
-      videos.forEach(function (v) { ioV.observe(v); });
+      videos.forEach(function (v) {
+        ioV.observe(v);
+        // un clic (ou Entrée) met la vidéo en pause ou la relance
+        v.setAttribute('tabindex', '0');
+        v.setAttribute('title', 'Cliquer pour mettre en pause ou relancer la vidéo');
+        var basculer = function () {
+          if (v.paused) { v.removeAttribute('data-arretee'); var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+          else { v.setAttribute('data-arretee', ''); v.pause(); }
+        };
+        v.addEventListener('click', basculer);
+        v.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); basculer(); } });
+      });
     }
   }
 
@@ -450,7 +461,7 @@
     if (hasG && !calme) gsap.fromTo(m, { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' });
     $('[data-vis-legende]', vis).innerHTML = '';
     $('[data-vis-legende]', vis).appendChild(d.createTextNode(leg));
-    var sm = d.createElement('small'); sm.textContent = 'Lieu et date : à compléter'; $('[data-vis-legende]', vis).appendChild(sm);
+    var sm = d.createElement('small'); sm.textContent = 'Lieu et date\u00a0: à compléter'; $('[data-vis-legende]', vis).appendChild(sm);
     $('[data-vis-compte]', vis).textContent = (visIdx + 1) + ' / ' + visListe.length;
     if (b.hasAttribute('data-vis-lien')) { lien.hidden = false; lien.href = b.getAttribute('data-vis-lien'); lien.textContent = b.getAttribute('data-vis-lien-txt'); }
     else lien.hidden = true;

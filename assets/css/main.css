@@ -4,13 +4,13 @@
 
 @font-face {
   font-family: "Big Shoulders Display";
-  src: url("../fonts/big-shoulders-display.woff") format("woff");
+  src: url("../fonts/big-shoulders-display.woff2") format("woff2"), url("../fonts/big-shoulders-display.woff") format("woff");
   font-weight: 100 900;
   font-display: swap;
 }
 @font-face {
   font-family: "Manrope";
-  src: url("../fonts/manrope.woff") format("woff");
+  src: url("../fonts/manrope.woff2") format("woff2"), url("../fonts/manrope.woff") format("woff");
   font-weight: 200 800;
   font-display: swap;
 }
@@ -25,6 +25,8 @@
   --zinc-clair: #c9ced2;
   --cuivre: #c46a3a;
   --cuivre-vif: #db8452;
+  --cuivre-btn: #a4532a;        /* fond des boutons : contraste AA avec la chaux (4,7:1) */
+  --cuivre-btn-survol: #8a4422;
   --chaux: #f2efea;
   --chaux-2: #e6e1d8;
   --encre: #16191d;
@@ -148,7 +150,7 @@ button { font: inherit; color: inherit; }
 
 /* ------------------------------------------------------------------ boutons */
 .btn {
-  --b-bg: var(--cuivre); --b-fg: var(--chaux);
+  --b-bg: var(--cuivre-btn); --b-fg: var(--chaux);
   position: relative; display: inline-flex; align-items: center; gap: .7rem;
   min-height: 52px; padding: .85rem 1.4rem; border: 0; border-radius: 999px;
   background: var(--b-bg); color: var(--b-fg); text-decoration: none; cursor: pointer;
@@ -158,7 +160,7 @@ button { font: inherit; color: inherit; }
 }
 .btn::before {
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
-  background: var(--cuivre-vif); transform: translateY(102%); transition: transform .45s var(--ease);
+  background: var(--cuivre-btn-survol); transform: translateY(102%); transition: transform .45s var(--ease);
 }
 .btn:hover::before { transform: translateY(0); }
 .btn svg { width: 18px; height: 18px; flex: none; }
@@ -773,7 +775,7 @@ html.calme .ouverture { display: none; }
 /* visuel d'attente (prestation sans photo) */
 .attente {
   position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden;
-  background: linear-gradient(180deg, rgba(18, 21, 25, .72), rgba(18, 21, 25, .9)), url("../img/grok/texture-ardoise-1x1.webp") center / 380px auto;
+  background: linear-gradient(180deg, rgba(18, 21, 25, .72), rgba(18, 21, 25, .9)), url("../img/grok/texture-ardoise-512.webp") center / 380px auto;
 }
 .attente__ico { width: 34%; max-width: 150px; color: var(--cuivre); opacity: .9; }
 .attente__ico svg { width: 100%; height: auto; stroke-width: 1; }
@@ -1056,3 +1058,25 @@ html.calme .mur-photos__ligne { animation: none; }
 .menu__groupe ul a { text-transform: none; letter-spacing: 0; }
 .mosaique--fiche { grid-template-columns: repeat(auto-fill, minmax(min(46%, 230px), 1fr)); }
 @media (max-width: 600px) { .mosaique { columns: 2; column-gap: 10px; } .mosaique__el { margin-bottom: 12px; } .mosaique--fiche { gap: 10px; } .mosaique__titre { font-size: .64rem; } }
+
+/* ================================================================== v4 : corrections de l'audit */
+/* contraste : badges et lien d'évitement sur cuivre foncé */
+.mosaique__badge, .chantier__badge, .skip { background: var(--cuivre-btn); }
+.coord__ligne > span { color: #575c62; }
+/* méthode sur fond chaux */
+.methode:not(.sec--chaux) { background: var(--nuit); }
+.methode.sec--chaux { background: var(--chaux); }
+.sec--chaux .methode__etape p { color: #62676d; }
+.sec--chaux .methode__etape.est-mouillee p { color: var(--encre); }
+.sec--chaux .methode__num { color: #cfc8bc; }
+.sec--chaux .methode__etape.est-mouillee .methode__num { color: #a4532a; }
+.sec--chaux .methode__collier { background: #9aa3ab; }
+.sec--chaux .methode__etape.est-mouillee .methode__collier { background: #a4532a; }
+html.calme .sec--chaux .methode__etape p, html:not(.js) .sec--chaux .methode__etape p { color: var(--encre); }
+/* cibles tactiles d'au moins 24 px */
+.pied ul a, .doc__sommaire a, .fil a { display: inline-block; padding: .2rem 0; }
+.nav > ul > li > a { display: inline-block; padding: .4rem 0; }
+.pied__bas a { display: inline-block; padding: .25rem 0; }
+.methode__corps { position: relative; padding-left: 76px; }
+.methode__corps .methode__etapes { padding: 0; position: static; }
+.methode__corps .methode__etape { position: relative; }

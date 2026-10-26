@@ -20,5 +20,10 @@ Les fichiers des pages dont l'adresse contient un accent portent un nom sans acc
 4. Remplacer tous les « à compléter » et valider les mentions signalées « à valider » sur les fiches.
 5. Relier les formulaires de contact et de devis à un vrai service d'envoi.
 
+## Sécurité et cache (vercel.json)
+- En-têtes de sécurité : CSP, X-Frame-Options, Referrer-Policy, Permissions-Policy, nosniff.
+- La CSP autorise le petit script en ligne du `<head>` par son empreinte sha256 : si ce script change, recalculer l'empreinte dans vercel.json.
+- Cache : CSS, JS et polices 1 an (les CSS et JS sont versionnés par `?v=`), images 30 jours.
+
 ## Bibliothèques (hébergées dans assets/js/vendor)
 GSAP 3.15 (ScrollTrigger, SplitText), Lenis 1.3.27, OGL 1.0.11. Polices Big Shoulders Display et Manrope (SIL OFL).

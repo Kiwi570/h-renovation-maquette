@@ -96,7 +96,8 @@
     if (!window.OGL) return null;
     var O = window.OGL, renderer, gl;
     try {
-      renderer = new O.Renderer({ canvas: canvas, dpr: Math.min(window.devicePixelRatio || 1, 1.5), alpha: false, antialias: false, powerPreference: 'high-performance' });
+      var petit = window.innerWidth < 900;
+      renderer = new O.Renderer({ canvas: canvas, dpr: Math.min(window.devicePixelRatio || 1, petit ? 1 : 1.25), alpha: false, antialias: false, powerPreference: 'high-performance' });
       gl = renderer.gl;
     } catch (e) { return null; }
     if (!gl) return null;
@@ -165,6 +166,7 @@
     section.addEventListener('pointerleave', function () { px = py = -1; });
 
     var visible = true, raf = 0, last = performance.now(), t = Math.random() * 20;
+    var pas = window.innerWidth < 900 ? 1000 / 30 : 0, dernierRendu = 0; // 30 images/s sur téléphone
     var io = new IntersectionObserver(function (en) {
       visible = en[0].isIntersecting;
       if (visible && !raf) { last = performance.now(); raf = requestAnimationFrame(loop); }
@@ -174,6 +176,8 @@
     function loop(now) {
       raf = 0;
       if (!visible) return;
+      if (pas && now - dernierRendu < pas - 2) { raf = requestAnimationFrame(loop); return; }
+      dernierRendu = now;
       var dt = Math.min(0.05, (now - last) / 1000); last = now; t += dt;
       wc.globalCompositeOperation = 'source-over';
       wc.fillStyle = 'rgba(0,0,0,0.012)'; wc.fillRect(0, 0, 160, 160);
@@ -205,8 +209,10 @@
       pluie = HR.pluie(canvas, img, { section: hero, rain: rainMax, clear: clear0 });
       if (pluie) hero.classList.add('gl-pret'); else hero.classList.add('sans-gl');
     }
-    if (img && img.complete && img.naturalWidth) demarrerPluie();
-    else if (img) img.addEventListener('load', demarrerPluie, { once: true });
+    // la pluie démarre quand le navigateur est disponible, pour ne pas gêner le chargement
+    var plusTard = function () { (window.requestIdleCallback || function (f) { setTimeout(f, 300); })(demarrerPluie, { timeout: 1500 }); };
+    if (img && img.complete && img.naturalWidth) plusTard();
+    else if (img) img.addEventListener('load', plusTard, { once: true });
     else hero.classList.add('sans-gl');
 
     if (!hasG || calme) return;
