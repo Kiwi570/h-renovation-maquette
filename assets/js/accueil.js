@@ -144,20 +144,6 @@
       });
       gsap.from(figs, { opacity: 0, y: 60, duration: 1, ease: 'power3.out', stagger: 0.06, scrollTrigger: { trigger: piste, start: 'top 85%', once: true } });
     }
-    var av = $('[data-avap]', real);
-    if (av) {
-      var input = $('input', av), apres = $('.avap__pan--apres', av), poignee = $('.avap__poignee', av);
-      var maj = function () { var v = input.value; apres.style.clipPath = 'inset(0 0 0 ' + v + '%)'; poignee.style.left = v + '%'; };
-      input.addEventListener('input', maj); maj();
-    }
-  }
-
-  // ------------------------------------------------------------- citation mot à mot
-  var cit = $('[data-mots]');
-  if (cit && anime) {
-    cit.innerHTML = cit.textContent.split(' ').map(function (m) { return '<span class="mot">' + m + '</span>'; }).join(' ');
-    cit.classList.add('anime');
-    gsap.to($$('.mot', cit), { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: cit, start: 'top 82%', end: 'top 45%', scrub: true } });
   }
 
   // ------------------------------------------------------------- pile d'ardoises : avis clients
@@ -205,16 +191,4 @@
     pile.addEventListener('pointercancel', relacher);
   }
 
-  // ------------------------------------------------------------- carte de la zone
-  var carte = $('[data-carte]');
-  if (carte && anime) {
-    $$('.draw', carte).forEach(function (p) {
-      var l = p.getTotalLength();
-      gsap.fromTo(p, { strokeDasharray: l, strokeDashoffset: l }, { strokeDashoffset: 0, duration: 2.2, ease: 'power2.inOut', scrollTrigger: { trigger: carte, start: 'top 78%', once: true } });
-    });
-    gsap.from($$('[data-ville]', carte), { opacity: 0, y: 8, duration: 0.5, stagger: 0.06, delay: 0.6, scrollTrigger: { trigger: carte, start: 'top 78%', once: true } });
-    gsap.from($('.herblay .pin', carte), { y: -80, opacity: 0, duration: 1.1, ease: 'bounce.out', delay: 1, scrollTrigger: { trigger: carte, start: 'top 78%', once: true } });
-    gsap.fromTo($$('[data-onde]', carte), { attr: { r: 20 }, opacity: 0.9 }, { attr: { r: 110 }, opacity: 0, duration: 2.4, ease: 'power1.out', repeat: -1, stagger: 1.2 });
-    gsap.to($('[data-rayon]', carte), { strokeDashoffset: -140, duration: 7, ease: 'none', repeat: -1 });
-  }
 })();

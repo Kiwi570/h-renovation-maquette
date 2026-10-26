@@ -16,8 +16,8 @@
     mousse: ['toiture', ['demoussage-toiture', 'nettoyage-toiture', 'hydrofuge-toiture']],
     gouttiere: ['toiture', ['gouttiere']],
     lumiere: ['toiture', ['velux']],
-    humidite: ['facade', ['facade-5', 'facade-6', 'facade-7', 'facade-8']],
-    froid: ['isolation', ['isolation-3', 'isolation-4']],
+    humidite: ['facade', ['traitement-humidite', 'remontees-capillaires', 'salpetre', 'infiltrations-eau']],
+    froid: ['isolation', ['combles-perdus', 'combles-amenageables']],
     toiture: ['toiture', []], facade: ['facade', []], isolation: ['isolation', []],
   };
 
@@ -34,7 +34,8 @@
     var m = /^#besoin-(.+)$/.exec(location.hash || '');
     if (!m) return;
     var cle = decodeURIComponent(m[1]);
-    var conf = PRESELECTION[cle] || (d.getElementById('p-' + cle) ? ['toiture', [cle]] : null);
+    var caseId = d.getElementById('p-' + cle);
+    var conf = PRESELECTION[cle] || (caseId ? [caseId.closest('[data-cases]').getAttribute('data-cases'), [cle]] : null);
     if (!conf) return;
     var r = d.getElementById('univers-' + conf[0]);
     if (r) r.checked = true;

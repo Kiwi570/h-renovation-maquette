@@ -23,64 +23,75 @@
   ],
   "redirects": [
     {
-      "source": "/services/:slug(hydrofuge-fa.*|d.*moussage-fa.*|nettoyage-fa.*|ravalement.*|rev.*tement.*)",
-      "destination": "/#facade",
+      "source": "/merci-contact",
+      "destination": "/contact",
       "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/servicetype/:c(fa.*ade)",
+      "destination": "/servicetype/facade"
     },
     {
-      "source": "/services/:slug(traitement-d.*humidit.*|remont.*capillaires|salp.*tre|infiltrations.*|nettoyage-terrasse)",
-      "destination": "/#facade",
-      "permanent": true
+      "source": "/services/:s(d.*moussage-toiture)",
+      "destination": "/services/demoussage-toiture"
     },
     {
-      "source": "/services/:slug(isolation.*|combles.*)",
-      "destination": "/#isolation",
-      "permanent": true
+      "source": "/services/:s(r.*fection-toiture)",
+      "destination": "/services/refection-toiture"
     },
     {
-      "source": "/services/:slug",
-      "destination": "/servicetype/toiture",
-      "permanent": true
+      "source": "/services/:s(goutti.*re)",
+      "destination": "/services/gouttiere"
     },
     {
-      "source": "/servicetype/isolation",
-      "destination": "/#isolation",
-      "permanent": true
+      "source": "/services/:s(hydrofuge-fa.*ade)",
+      "destination": "/services/hydrofuge-facade"
     },
     {
-      "source": "/servicetype/:slug(fa.*ade)",
-      "destination": "/#facade",
-      "permanent": true
+      "source": "/services/:s(d.*moussage-fa.*ade)",
+      "destination": "/services/demoussage-facade"
     },
     {
-      "source": "/realisations",
-      "destination": "/#realisations",
-      "permanent": true
+      "source": "/services/:s(nettoyage-fa.*ade)",
+      "destination": "/services/nettoyage-facade"
     },
     {
-      "source": "/contact",
-      "destination": "/#contact",
-      "permanent": true
+      "source": "/services/:s(ravalement-de-fa.*ade)",
+      "destination": "/services/ravalement-de-facade"
     },
     {
-      "source": "/a-propos",
-      "destination": "/#samuel",
-      "permanent": true
+      "source": "/services/:s(rev.*tement-de-fa.*ade)",
+      "destination": "/services/revetement-de-facade"
     },
     {
-      "source": "/conditions-generales",
-      "destination": "/mentions-legales",
-      "permanent": true
+      "source": "/services/:s(traitement-d.*humidit.*)",
+      "destination": "/services/traitement-humidite"
     },
     {
-      "source": "/politique-de-confidentialite",
-      "destination": "/mentions-legales#confidentialite",
-      "permanent": true
+      "source": "/services/:s(remont.*es-capillaires)",
+      "destination": "/services/remontees-capillaires"
     },
     {
-      "source": "/declaration-daccessibilite",
-      "destination": "/mentions-legales",
-      "permanent": true
+      "source": "/services/:s(salp.*tre)",
+      "destination": "/services/salpetre"
+    },
+    {
+      "source": "/services/:s(infiltrations-d.*eau)",
+      "destination": "/services/infiltrations-eau"
+    },
+    {
+      "source": "/services/:s(isolation-thermique-int.*rieure)",
+      "destination": "/services/isolation-thermique-interieure"
+    },
+    {
+      "source": "/services/:s(isolation-thermique-ext.*rieure)",
+      "destination": "/services/isolation-thermique-exterieure"
+    },
+    {
+      "source": "/services/:s(combles-am.*nageables)",
+      "destination": "/services/combles-amenageables"
     }
   ]
 }
