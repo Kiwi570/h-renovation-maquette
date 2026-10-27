@@ -30,24 +30,6 @@
           "value": "default-src 'self'; script-src 'self' 'sha256-UZXV2kjvrSDb9ot4lJdQJ8wnaoxkfDEy+r2/PAvufiI='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
         }
       ]
-    },
-    {
-      "source": "/assets/(css|js|fonts)/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/assets/img/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
-        }
-      ]
     }
   ],
   "redirects": [
