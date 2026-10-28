@@ -24,11 +24,11 @@
     gsap.set(o, { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' });
     gsap.set(trait, { strokeDasharray: long, strokeDashoffset: long });
     var tl = gsap.timeline({ onComplete: function () { o.remove(); if (HR.lenis) HR.lenis.start(); } });
-    tl.to(trait, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut' })
-      .from(lettres, { yPercent: -150, rotationX: -95, opacity: 0, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.045 }, '-=0.25')
+    tl.to(trait, { strokeDashoffset: 0, duration: 0.45, ease: 'power2.inOut' })
+      .from(lettres, { yPercent: -150, rotationX: -95, opacity: 0, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.025 }, '-=0.25')
       .from($('.ouverture__sous', o), { opacity: 0, y: 10, duration: 0.4 }, '-=0.3')
-      .to(o, { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)', duration: 0.85, ease: 'expo.inOut' }, '+=0.2')
-      .call(signal, null, '-=0.55');
+      .to(o, { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)', duration: 0.6, ease: 'expo.inOut' })
+      .call(signal, null, '-=0.6');
   })();
 
   // ------------------------------------------------------------- bandeau de zinc
@@ -129,18 +129,26 @@
       mm.add('(min-width: 900px)', function () {
         real.classList.add('est-epingle');
         var pin = $('[data-real-pin]', real);
+        // hauteur des images = place restante sous le titre, légende comprise (mesurée, jamais estimée)
+        var mesurer = function () {
+          var leg = $('figcaption', piste), gap = parseFloat(getComputedStyle(figs[0]).rowGap) || 0;
+          var hImg = Math.min(720, piste.clientHeight - (leg ? leg.offsetHeight : 0) - gap);
+          real.style.setProperty('--real-img-h', Math.max(120, Math.floor(hImg)) + 'px');
+        };
+        mesurer();
+        ScrollTrigger.addEventListener('refreshInit', mesurer);
         var dist = function () { return Math.max(0, piste.scrollWidth - window.innerWidth + 40); };
         var tw = gsap.to(piste, {
           x: function () { return -dist(); }, ease: 'none',
           scrollTrigger: {
-            trigger: pin, start: 'center center', end: function () { return '+=' + dist(); }, pin: true, scrub: 0.8, invalidateOnRefresh: true,
+            trigger: pin, start: 'top top', end: function () { return '+=' + dist(); }, pin: true, scrub: 0.8, invalidateOnRefresh: true,
             onUpdate: function (self) { if (num) num.textContent = pad(1 + Math.round(self.progress * (n - 1))); },
           },
         });
         $$('[data-parallax-x]', piste).forEach(function (img) {
           gsap.fromTo(img, { xPercent: -7 }, { xPercent: 7, ease: 'none', scrollTrigger: { trigger: img.closest('.chantier'), containerAnimation: tw, start: 'left right', end: 'right left', scrub: true } });
         });
-        return function () { real.classList.remove('est-epingle'); gsap.set(piste, { clearProps: 'x' }); };
+        return function () { ScrollTrigger.removeEventListener('refreshInit', mesurer); real.classList.remove('est-epingle'); real.style.removeProperty('--real-img-h'); gsap.set(piste, { clearProps: 'x' }); };
       });
       gsap.from(figs, { opacity: 0, y: 60, duration: 1, ease: 'power3.out', stagger: 0.06, scrollTrigger: { trigger: piste, start: 'top 85%', once: true } });
     }

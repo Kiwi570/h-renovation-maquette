@@ -1080,3 +1080,52 @@ html.calme .sec--chaux .methode__etape p, html:not(.js) .sec--chaux .methode__et
 .methode__corps { position: relative; padding-left: 76px; }
 .methode__corps .methode__etapes { padding: 0; position: static; }
 .methode__corps .methode__etape { position: relative; }
+
+/* ================================================================== étape 2 : corrections de l'audit */
+/* galerie épinglée : tout tient dans l'écran (hauteurs mesurées en JS : --entete-h, --real-img-h) */
+@media (min-width: 900px) {
+  .real.est-epingle [data-real-pin] {
+    height: 100svh; display: flex; flex-direction: column;
+    padding-top: calc(var(--entete-h, 76px) + clamp(.75rem, 3svh, 2rem)); padding-bottom: clamp(.75rem, 3svh, 2rem);
+  }
+  .real.est-epingle .real__tete { flex: none; margin-bottom: clamp(1rem, 3svh, 2.5rem); }
+  .real.est-epingle .real__piste { flex: 1; min-height: 0; align-items: flex-start; }
+  .real.est-epingle .chantier, .real.est-epingle .chantier:nth-child(3n + 2) { width: auto; }
+  .real.est-epingle .chantier__img { height: var(--real-img-h, 50svh); width: calc(var(--real-img-h, 50svh) * 4 / 5); aspect-ratio: auto; }
+  .real.est-epingle .chantier:nth-child(3n + 2) .chantier__img { width: min(86vw, calc(var(--real-img-h, 50svh) * 5 / 4)); }
+  .real.est-epingle .chantier__img img, .real.est-epingle .chantier__img video { height: 100%; }
+}
+@media (min-width: 900px) and (max-height: 700px) {
+  .real.est-epingle .real__tete .h2 { font-size: clamp(2rem, 9svh, 3.4rem); }
+  .real.est-epingle .real__tete .eyebrow { margin-bottom: .3rem; }
+  .real.est-epingle .real__compteur { font-size: 1.3rem; }
+}
+
+/* textes d'au moins 12 px */
+.marque small { font-size: max(12px, .6rem); }
+.tete__tel span { font-size: max(12px, .62rem); }
+.note-maquette b { font-size: max(12px, .68rem); }
+.pied h2 { font-size: max(12px, .72rem); }
+.carte-sf__badge, .avap__pan span, .filtre span { font-size: max(12px, .72rem); }
+.univers-carte__nb { font-size: max(12px, .74rem); }
+.coord__ligne > span { font-size: max(12px, .7rem); }
+.carte-zone__legende { font-size: max(12px, .68rem); }
+.plaque dt { font-size: max(12px, .66rem); }
+.chantier__badge, .progres li { font-size: max(12px, .66rem); }
+.mosaique__badge { font-size: max(12px, .64rem); }
+.mosaique__titre { font-size: max(12px, .74rem); }
+@media (max-width: 600px) { .mosaique__titre { font-size: 12px; letter-spacing: .04em; } }
+@media (max-width: 599px) { .marque small { letter-spacing: .06em; } }
+@media (max-width: 480px) { .progres { grid-template-columns: 60px minmax(0, 1fr); gap: .9rem; } .progres svg { width: 60px; } .progres ol { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: .6rem; } .progres li { letter-spacing: .02em; } }
+
+/* zones tactiles d'au moins 44 px sur téléphone et tablette */
+@media (max-width: 899px) {
+  .marque, .bascule, .copie, .lien--fleche, .coord__num, .fil a, .pied ul a, .pied__bas a, .diag__liste button, details ul a.lien, .doc__sommaire a {
+    min-height: 44px; min-width: 44px; display: inline-flex; align-items: center;
+  }
+  .consent input { width: 24px; height: 24px; }
+  .consent { min-height: 44px; }
+}
+
+/* barre mobile : le pied de page réserve sa hauteur réelle (--barres-h mesurée en JS) */
+@media (max-width: 899px) { .pied { padding-bottom: calc(3rem + var(--barres-h, 0px)); } }

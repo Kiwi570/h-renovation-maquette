@@ -40,14 +40,44 @@
   // ------------------------------------------------------------- en-tête, menu, barre mobile
   var tete = $('[data-tete]'), barre = $('[data-barre]'), burger = $('[data-burger]'), menu = $('[data-menu]');
   var menuOuvert = false, dernierY = 0;
-  var seuilBarre = $('[data-hero]') ? window.innerHeight * 0.6 : 140;
+  // hauteurs réelles de l'en-tête et de la barre du bas, pour les sections qui doivent tenir dans l'écran
+  function mesurerBarres() {
+    if (tete) h.style.setProperty('--entete-h', tete.offsetHeight + 'px');
+    if (barre) h.style.setProperty('--barres-h', barre.offsetHeight + 'px');
+  }
+  mesurerBarres();
+  if (window.ResizeObserver) { var roBarres = new ResizeObserver(mesurerBarres); if (tete) roBarres.observe(tete); if (barre) roBarres.observe(barre); }
+  // barre mobile : seulement une fois le héros dépassé, jamais sur un formulaire, le pied de page ou le menu ouvert
+  var heroPasse = false, caches = [];
+  function majBarre() {
+    if (!barre) return;
+    var on = heroPasse && !caches.length && !menuOuvert;
+    barre.classList.toggle('est-visible', on);
+    barre.inert = !on;
+  }
+  if (barre && 'IntersectionObserver' in window) {
+    var heroEl = $('[data-hero]') || $('main > section');
+    if (heroEl) new IntersectionObserver(function (en) {
+      heroPasse = !en[0].isIntersecting && en[0].boundingClientRect.top < 0; majBarre();
+    }).observe(heroEl);
+    else heroPasse = true;
+    var ioMasque = new IntersectionObserver(function (en) {
+      en.forEach(function (e) {
+        var i = caches.indexOf(e.target);
+        if (e.isIntersecting && i < 0) caches.push(e.target);
+        else if (!e.isIntersecting && i > -1) caches.splice(i, 1);
+      });
+      majBarre();
+    });
+    $$('form, [data-devis], .pied').forEach(function (el) { ioMasque.observe(el); });
+  }
+  majBarre();
   function auDefilement(y) {
     if (tete) {
       tete.classList.toggle('est-replie', y > 40);
       if (y > dernierY + 6 && y > 500 && !menuOuvert) tete.classList.add('est-cache');
       else if (y < dernierY - 6 || y < 200) tete.classList.remove('est-cache');
     }
-    if (barre) barre.classList.toggle('est-visible', y > seuilBarre);
     dernierY = y;
   }
   if (lenis) lenis.on('scroll', function (e) { auDefilement(e.scroll); });
@@ -62,6 +92,7 @@
     burger.setAttribute('aria-expanded', 'true');
     burger.setAttribute('aria-label', 'Fermer le menu');
     tete.classList.remove('est-cache');
+    majBarre();
     if (lenis) lenis.stop();
     if (hasG && !calme) gsap.from($$('.menu__liste > li', menu), { yPercent: 60, opacity: 0, duration: 0.7, ease: 'expo.out', stagger: 0.05, delay: 0.15 });
     var premier = $('a', menu); if (premier) premier.focus({ preventScroll: true });
@@ -73,6 +104,7 @@
     menu.inert = true;
     burger.setAttribute('aria-expanded', 'false');
     burger.setAttribute('aria-label', 'Ouvrir le menu');
+    majBarre();
     if (lenis) lenis.start();
     if (rendreFocus) burger.focus();
   }

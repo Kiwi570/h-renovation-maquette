@@ -16,7 +16,7 @@ Les fichiers des pages dont l'adresse contient un accent portent un nom sans acc
 ## Avant la mise en ligne réelle
 1. Retirer `<meta name="robots" content="noindex, nofollow">` de chaque page.
 2. Retirer l'en-tête `X-Robots-Tag` de `vercel.json`.
-3. Brancher le domaine www.h-renovation.com sur Vercel, vérifier la propriété dans Google Search Console (la balise actuelle est conservée sur l'accueil) et envoyer `sitemap.xml`.
+3. Brancher le domaine www.h-renovation.com sur Vercel, remettre `og:image` sur `https://www.h-renovation.com/assets/img/og-h-renovation.jpg` dans chaque page (il pointe vers l'adresse de la maquette en attendant), vérifier la propriété dans Google Search Console (la balise actuelle est conservée sur l'accueil) et envoyer `sitemap.xml`.
 4. Remplacer tous les « à compléter » et valider les mentions signalées « à valider » sur les fiches.
 5. Relier les formulaires de contact et de devis à un vrai service d'envoi.
 
