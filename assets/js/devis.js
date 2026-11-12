@@ -16,6 +16,7 @@
     mousse: ['toiture', ['demoussage-toiture', 'nettoyage-toiture', 'hydrofuge-toiture']],
     gouttiere: ['toiture', ['gouttiere']],
     lumiere: ['toiture', ['velux']],
+    cheminee: ['toiture', ['solin']],
     humidite: ['facade', ['traitement-humidite', 'remontees-capillaires', 'salpetre', 'infiltrations-eau']],
     froid: ['isolation', ['combles-perdus', 'combles-amenageables']],
     toiture: ['toiture', []], facade: ['facade', []], isolation: ['isolation', []],
