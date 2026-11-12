@@ -97,7 +97,11 @@
       gsap.set(faite, { scaleX: 0, transformOrigin: '50% 50%' });
       gsap.set(chem, { opacity: 0, y: -20 });
       gouts.forEach(function (g) { var l = g.getTotalLength(); gsap.set(g, { strokeDasharray: l, strokeDashoffset: l }); });
-      var tl = gsap.timeline({ scrollTrigger: { trigger: $('.rangs__etapes', rangsSec), start: 'top 75%', end: 'bottom 65%', scrub: 0.7 } });
+      // mobile : l'illustration n'est plus collée en haut, le toit se pose pendant qu'elle traverse l'écran
+      var petit = window.matchMedia('(max-width: 899px)').matches;
+      var tl = gsap.timeline({ scrollTrigger: petit
+        ? { trigger: svgR, start: 'top 85%', end: 'bottom 40%', scrub: 0.7 }
+        : { trigger: $('.rangs__etapes', rangsSec), start: 'top 75%', end: 'bottom 65%', scrub: 0.7 } });
       tl.to(gouts, { strokeDashoffset: 0, duration: 0.6, ease: 'none' }, 0);
       lignes.forEach(function (row, k) {
         tl.to(row, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out', stagger: 0.02 }, 0.35 + k * 0.32);
